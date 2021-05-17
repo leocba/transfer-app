@@ -1,0 +1,9 @@
+<h2>List</h2>
+
+<ul class="transfers">
+  <li *ngFor="let transfer of transfers">
+    <a routerLink="/transfers/{{transfer.id}}">
+      <span>{{transfer.id}}</span> {{transfer.accountHolder}}
+    </a>
+  </li>
+</ul>
