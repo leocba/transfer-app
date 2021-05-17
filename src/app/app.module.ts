@@ -10,6 +10,11 @@ import { TransfersListComponent } from './components/transfers-list/transfers-li
 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import {StoreModule} from '@ngrx/store';
+
+import * as fromTransferStore from './store';
+
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -23,7 +28,12 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot({}),
+    StoreModule.forFeature('transfers', fromTransferStore.reducer),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

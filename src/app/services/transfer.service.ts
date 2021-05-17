@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { TRANSFERS } from '../mock-data';
 import {ITransfer} from '../ITransfer';
 
-const baseUrl = 'http://localhost:8080/api/tutorials';
+const baseUrl = 'http://localhost:3000/api';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,12 @@ export class TransferService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): ITransfer[] {
-    return TRANSFERS;
+  // getAll(): ITransfer[] {
+  //   return TRANSFERS;
+  // }
+
+  getAll(): Observable< any> {
+    return this.http.get(`${baseUrl}/transactions`);
   }
 
   // get(id): Observable<any> {
