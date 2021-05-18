@@ -22,6 +22,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import {MatIconModule} from '@angular/material/icon';
     MatIconModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25
-    })
+    }),
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

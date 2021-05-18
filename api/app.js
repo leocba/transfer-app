@@ -8,11 +8,11 @@ app.use(cors())
 app.get('/api/transactions', (req, res) => {
   return res.json({
     list: [
-      { id: 1, accountHolder: 'Penelope Berry', IBAN: 'DE63500105173833675741', amount: 10.99, date: new Date(), note: '1 transfer'},
-      { id: 2, accountHolder: 'Paul Clarkson', IBAN: 'DE92500105174765356824', amount: 250.80, date: new Date(), note: '2 transfer'},
-      { id: 3, accountHolder: 'David Butler', IBAN: 'DE82500105171946297899', amount: 1000.99, date: new Date(), note: '3 transfer'},
-      { id: 4, accountHolder: 'Sarah Davidson', IBAN: 'DE05500105174921581158', amount: 500, date: new Date(), note: '4 transfer'},
-      { id: 5, accountHolder: 'Tracey Hunter', IBAN: 'DE93500105176198859181', amount: 68.25, date: new Date(), note: '5 transfer'}
+      { id: 1, accountHolder: 'Penelope Berry', IBAN: 'DE63500105173833675741', amount: 10.99, date: new Date(), note: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus lacus eget bibendum porta.'},
+      { id: 2, accountHolder: 'Paul Clarkson', IBAN: 'DE92500105174765356824', amount: 250.80, date: new Date(), note: 'Sed id consequat urna. Maecenas ac mattis neque. Suspendisse in luctus lectus.'},
+      { id: 3, accountHolder: 'David Butler', IBAN: 'DE82500105171946297899', amount: 1000.99, date: new Date(), note: 'Mauris egestas sagittis nunc eu condimentum.'},
+      { id: 4, accountHolder: 'Sarah Davidson', IBAN: 'DE05500105174921581158', amount: 500, date: new Date(), note: 'Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent ut feugiat tortor.'},
+      { id: 5, accountHolder: 'Tracey Hunter', IBAN: 'DE93500105176198859181', amount: 68.25, date: new Date(), note: 'Sed pulvinar ex nulla, in eleifend ex venenatis vel. Proin sit amet est non ligula blandit facilisis ut non est'}
     ]
   });
 })

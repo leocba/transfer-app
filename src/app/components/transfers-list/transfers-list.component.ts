@@ -3,7 +3,6 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import { ITransfer } from '../../ITransfer';
 import { TransferService } from '../../services/transfer.service';
 import { Store, select } from '@ngrx/store';
-// import {LoadTransfers} from "../../store/actions";
 
 import {
   LoadTransfers
@@ -11,27 +10,17 @@ import {
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 
-
-
-// const TRANSFERS: ITransfer[] = [
-//   { id: 1, accountHolder: 'PenelopeHard Berry', IBAN: 'DE63500105173833675741', amount: 10.99, date: new Date(), note: '1 transfer'},
-//   { id: 2, accountHolder: 'Paul Clarkson', IBAN: 'DE92500105174765356824', amount: 250.80, date: new Date(), note: '2 transfer'},
-//   { id: 3, accountHolder: 'David Butler', IBAN: 'DE82500105171946297899', amount: 1000.99, date: new Date(), note: '3 transfer'},
-//   { id: 4, accountHolder: 'Sarah Davidson', IBAN: 'DE05500105174921581158', amount: 500, date: new Date(), note: '4 transfer'},
-//   { id: 5, accountHolder: 'Tracey Hunter', IBAN: 'DE93500105176198859181', amount: 68.25, date: new Date(), note: '5 transfer'}
-// ];
-
 @Component({
   selector: 'app-transfers-list',
   templateUrl: './transfers-list.component.html',
   styleUrls: ['./transfers-list.component.scss']
 })
 
-export class TransfersListComponent implements AfterViewInit, OnInit {
+export class TransfersListComponent implements OnInit {
   @Input() list?: ITransfer[];
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['id', 'accountHolder'];
+  displayedColumns: string[] = ['id', 'accountHolder', 'note'];
   dataSource: MatTableDataSource<ITransfer>;
 
   transfers: ITransfer[];
@@ -50,11 +39,17 @@ export class TransfersListComponent implements AfterViewInit, OnInit {
 
         this.dataSource = new MatTableDataSource(transfers.list);
         this.dataSource.sort = this.sort;
+
+        this.dataSource.filterPredicate = (data: ITransfer, filter: string) => {
+          return data.accountHolder.toLowerCase().indexOf(filter) !== -1 || data.note.toLowerCase().indexOf(filter) !== -1;
+        };
       });
   }
 
-  ngAfterViewInit() {
-    // this.dataSource.sort = this.sort;
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 }
 
