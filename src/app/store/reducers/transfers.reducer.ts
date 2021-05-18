@@ -65,8 +65,10 @@ function deleteTransfer(state: TransfersState, payload: ITransfer): TransfersSta
 
 export const getTransfersState = createFeatureSelector('transfers');
 
-export const getTransferByAccountHolder = createSelector(getTransfersState, (state: TransfersState, accountHolder: string) => {
-  return state.transfers.find((transfer: ITransfer) => {
-    return transfer.accountHolder === accountHolder;
-  });
-});
+export const getAllTransfers = createSelector(getTransfersState, (state: TransfersState) => state.transfers);
+
+// export const getTransferByAccountHolder = createSelector(getTransfersState, (state: TransfersState, accountHolder: string) => {
+//   return state.transfers.find((transfer: ITransfer) => {
+//     return transfer.accountHolder === accountHolder;
+//   });
+// });

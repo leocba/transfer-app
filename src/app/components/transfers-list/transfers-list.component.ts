@@ -9,6 +9,8 @@ import {
 } from '../../store/actions/transfers.action';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import {Observable} from 'rxjs';
+import {getAllTransfers} from '../../store/reducers';
 
 @Component({
   selector: 'app-transfers-list',
@@ -20,6 +22,8 @@ export class TransfersListComponent implements OnInit {
   @Input() list?: ITransfer[];
   @ViewChild(MatSort) sort: MatSort;
 
+  transfers$: Observable<ITransfer[]>;
+
   displayedColumns: string[] = ['id', 'accountHolder', 'note'];
   dataSource: MatTableDataSource<ITransfer>;
 
@@ -28,22 +32,32 @@ export class TransfersListComponent implements OnInit {
   constructor(
     private transferService: TransferService,
     private store: Store
-  ) { }
+  ) {
+    this.transfers$ = this.store.select(getAllTransfers);
+  }
 
   ngOnInit() {
-    this.transferService
-      .getAll()
-      .subscribe((transfers) => {
-        this.store.dispatch(new LoadTransfers(transfers.list));
-        this.transfers = transfers.list;
+    this.transfers$.subscribe((transfers) => {
+      this.dataSource = new MatTableDataSource(transfers);
+      this.dataSource.sort = this.sort;
 
-        this.dataSource = new MatTableDataSource(transfers.list);
-        this.dataSource.sort = this.sort;
-
-        this.dataSource.filterPredicate = (data: ITransfer, filter: string) => {
-          return data.accountHolder.toLowerCase().indexOf(filter) !== -1 || data.note.toLowerCase().indexOf(filter) !== -1;
-        };
-      });
+      this.dataSource.filterPredicate = (data: ITransfer, filter: string) => {
+        return data.accountHolder.toLowerCase().indexOf(filter) !== -1 || data.note.toLowerCase().indexOf(filter) !== -1;
+      };
+    });
+    // this.transferService
+    //   .getAll()
+    //   .subscribe((transfers) => {
+    //     this.store.dispatch(new LoadTransfers(transfers.list));
+    //     this.transfers = transfers.list;
+    //
+    //     this.dataSource = new MatTableDataSource(transfers.list);
+    //     this.dataSource.sort = this.sort;
+    //
+    //     this.dataSource.filterPredicate = (data: ITransfer, filter: string) => {
+    //       return data.accountHolder.toLowerCase().indexOf(filter) !== -1 || data.note.toLowerCase().indexOf(filter) !== -1;
+    //     };
+    //   });
   }
 
   applyFilter(filterValue: string) {

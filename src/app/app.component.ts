@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
       .getAll()
       .subscribe((transfers) => {
         this.store.dispatch(new LoadTransfers(transfers.list));
-        this.transfers = transfers.list;
+        // this.transfers = transfers.list;
 
         // this.dataSource = new MatTableDataSource(transfers.list);
       });
