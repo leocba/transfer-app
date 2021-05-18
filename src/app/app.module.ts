@@ -16,6 +16,13 @@ import * as fromTransferStore from './store';
 
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { MatSliderModule } from '@angular/material/slider';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,9 +38,15 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     HttpClientModule,
     StoreModule.forRoot({}),
     StoreModule.forFeature('transfers', fromTransferStore.reducer),
+    MatSliderModule,
+    MatButtonModule,
+    MatTableModule,
+    MatSortModule,
+    MatToolbarModule,
+    MatIconModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25
-    }),
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
