@@ -27,7 +27,7 @@ export class AddTransferComponent implements OnInit {
   }
 
   saveTutorial(): void {
-    const data: ITransfer = {
+    const data:ITransfer = {
       id: this.transfer.id,
       accountHolder: this.transfer.accountHolder,
       IBAN: this.transfer.IBAN,

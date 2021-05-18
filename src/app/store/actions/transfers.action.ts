@@ -29,7 +29,7 @@ export class UpdateTransfer implements Action {
 export class DeleteTransfer implements Action {
   readonly type = TransfersActionTypes.DELETE_TRANSFER;
 
-  constructor(public payload: ITransfer) {}
+  constructor(public payload: number) {}
 }
 
 export type TransfersAction =

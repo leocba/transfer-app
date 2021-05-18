@@ -1,16 +1,19 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, NgZone, OnInit, ViewChild} from '@angular/core';
 
 import { ITransfer } from '../../ITransfer';
 import { TransferService } from '../../services/transfer.service';
 import { Store, select } from '@ngrx/store';
 
 import {
+  DeleteTransfer,
   LoadTransfers
 } from '../../store/actions/transfers.action';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {Observable} from 'rxjs';
 import {getAllTransfers} from '../../store/reducers';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-transfers-list',
@@ -24,16 +27,28 @@ export class TransfersListComponent implements OnInit {
 
   transfers$: Observable<ITransfer[]>;
 
-  displayedColumns: string[] = ['id', 'accountHolder', 'note'];
+  displayedColumns: string[] = ['id', 'accountHolder', 'note', 'actions'];
   dataSource: MatTableDataSource<ITransfer>;
 
   transfers: ITransfer[];
 
   constructor(
     private transferService: TransferService,
-    private store: Store
+    private store: Store,
+    public dialog: MatDialog
   ) {
     this.transfers$ = this.store.select(getAllTransfers);
+  }
+
+  openDialog(id: number) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        this.store.dispatch(new DeleteTransfer(id));
+      }
+      console.log(`Dialog result: ${result} ${id}`);
+    });
   }
 
   ngOnInit() {

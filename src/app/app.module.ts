@@ -23,14 +23,17 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule } from '@angular/material/input';
+import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddTransferComponent,
     TransferDetailsComponent,
-    TransfersListComponent
+    TransfersListComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,8 @@ import {MatInputModule } from '@angular/material/input';
       maxAge: 25
     }),
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -50,16 +50,21 @@ function createNewTransfer(state: TransfersState, payload: ITransfer): Transfers
 }
 
 function updateTransfer(state: TransfersState, payload: ITransfer): TransfersState {
+  const transfers = [...state.transfers];
+  const  foundIndex = transfers.findIndex(x => x.id === payload.id);
+  transfers[foundIndex] = payload;
   return {
     ...state,
-    transfers: [...state.transfers, payload]
+    transfers
   };
 }
 
-function deleteTransfer(state: TransfersState, payload: ITransfer): TransfersState {
+function deleteTransfer(state: TransfersState, payload: number): TransfersState {
+  const transfers = [...state.transfers];
+  const newState = transfers.filter(x => x.id !== payload);
   return {
     ...state,
-    transfers: [...state.transfers].splice(1, 1)
+    transfers: newState
   };
 }
 
