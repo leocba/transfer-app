@@ -1,90 +1,149 @@
 <form #heroForm="ngForm" appIdentityRevealed>
   <div [hidden]="heroForm.submitted">
     <div class="cross-validation" [class.cross-validation-error]="heroForm.errors?.identityRevealed && (heroForm.touched || heroForm.dirty)">
-      <div class="form-group">
-        <label for="accountHolder">accountHolder</label>
-        <input type="text" id="accountHolder" name="accountHolder" class="form-control"
+<!--      <div class="form-group">-->
+<!--        <label for="accountHolder">accountHolder</label>-->
+<!--        <input type="text" id="accountHolder" name="accountHolder" class="form-control"-->
+<!--               [(ngModel)]="transfer.accountHolder" #accountHolder="ngModel">-->
+<!--        <div *ngIf="accountHolder.invalid && (accountHolder.dirty || accountHolder.touched)"-->
+<!--             class="alert">-->
+<!--          <div *ngIf="accountHolder.errors?.required">-->
+<!--            Name is required.-->
+<!--          </div>-->
+<!--          <div *ngIf="accountHolder.errors?.minlength">-->
+<!--            Name must be at least 4 characters long.-->
+<!--          </div>-->
+<!--          <div *ngIf="accountHolder.errors?.forbiddenName">-->
+<!--            Name cannot be Bob.-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+      <mat-form-field class="fill">
+        <mat-label>accountHolder</mat-label>
+        <input matInput type="text" id="accountHolder" name="accountHolder"
                [(ngModel)]="transfer.accountHolder" #accountHolder="ngModel">
-        <div *ngIf="accountHolder.invalid && (accountHolder.dirty || accountHolder.touched)"
-             class="alert">
-          <div *ngIf="accountHolder.errors?.required">
-            Name is required.
-          </div>
-          <div *ngIf="accountHolder.errors?.minlength">
-            Name must be at least 4 characters long.
-          </div>
-          <div *ngIf="accountHolder.errors?.forbiddenName">
-            Name cannot be Bob.
-          </div>
-        </div>
-      </div>
+      </mat-form-field>
 
-      <div class="form-group">
-        <label for="accountHolder">IBAN</label>
-        <input type="text" id="IBAN" name="IBAN" class="form-control" required minlength="4"
+      <br />
+
+      <mat-form-field class="fill">
+        <mat-label>IBAN</mat-label>
+        <input matInput type="text" id="IBAN" name="IBAN"
                [(ngModel)]="transfer.IBAN" #IBAN="ngModel">
-      </div>
+      </mat-form-field>
 
-      <div class="form-group">
-        <label for="amount">amount</label>
-        <input type="text" id="amount" name="amount" class="form-control"
+      <br />
+
+      <mat-form-field class="fill">
+        <mat-label>amount</mat-label>
+        <input matInput type="text" id="amount" name="amount"
                [(ngModel)]="transfer.amount" #amount="ngModel">
-        <div *ngIf="accountHolder.invalid && (accountHolder.dirty || accountHolder.touched)"
-             class="alert">
-          <div *ngIf="accountHolder.errors?.required">
-            Name is required.
-          </div>
-          <div *ngIf="accountHolder.errors?.minlength">
-            Name must be at least 4 characters long.
-          </div>
-          <div *ngIf="accountHolder.errors?.forbiddenName">
-            Name cannot be Bob.
-          </div>
-        </div>
-      </div>
+      </mat-form-field>
 
-      <div class="form-group">
-        <label for="date">date</label>
-        <input type="text" id="date" name="accountHolder" class="form-control"
-               [(ngModel)]="transfer.date" #date="ngModel">
-        <div *ngIf="accountHolder.invalid && (accountHolder.dirty || accountHolder.touched)"
-             class="alert">
-          <div *ngIf="accountHolder.errors?.required">
-            Name is required.
-          </div>
-          <div *ngIf="accountHolder.errors?.minlength">
-            Name must be at least 4 characters long.
-          </div>
-          <div *ngIf="accountHolder.errors?.forbiddenName">
-            Name cannot be Bob.
-          </div>
-        </div>
-      </div>
+      <br />
 
-      <div class="form-group">
-        <label for="note">note</label>
-        <input type="text" id="note" name="note" class="form-control"
-               [(ngModel)]="transfer.note" #note="ngModel">
-        <div *ngIf="accountHolder.invalid && (accountHolder.dirty || accountHolder.touched)"
-             class="alert">
-          <div *ngIf="accountHolder.errors?.required">
-            Name is required.
-          </div>
-          <div *ngIf="accountHolder.errors?.minlength">
-            Name must be at least 4 characters long.
-          </div>
-          <div *ngIf="accountHolder.errors?.forbiddenName">
-            Name cannot be Bob.
-          </div>
-        </div>
-      </div>
+<!--      <input matInput [matDatepicker]="date" [(ngModel)]="transfer.amount">-->
+<!--      <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>-->
+<!--      <mat-datepicker #date></mat-datepicker>-->
+
+      <mat-form-field class="fill">
+        <mat-label>date</mat-label>
+        <input matInput [matDatepicker]="date" [(ngModel)]="transfer.date" name="date">
+        <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+        <mat-datepicker #date></mat-datepicker>
+      </mat-form-field>
 
 <!--      <mat-form-field appearance="fill">-->
 <!--        <mat-label>Choose a date</mat-label>-->
-<!--        <input matInput [matDatepicker]="picker">-->
-<!--        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
-<!--        <mat-datepicker #picker></mat-datepicker>-->
+<!--        <input matInput [matDatepicker]="date" disabled>-->
+<!--        <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>-->
+<!--        <mat-datepicker #date disabled="false"></mat-datepicker>-->
 <!--      </mat-form-field>-->
+
+      <br />
+
+      <mat-form-field appearance="fill">
+        <mat-label>Textarea</mat-label>
+        <textarea matInput  id="note" name="note"
+                  [(ngModel)]="transfer.note" #note="ngModel"></textarea>
+      </mat-form-field>
+
+<!--      <mat-form-field class="fill">-->
+<!--        <mat-label>note</mat-label>-->
+<!--        <textarea  matInput id="note" name="note"-->
+<!--               [(ngModel)]="transfer.note" #note="ngModel" />-->
+<!--      </mat-form-field>-->
+
+
+<!--      <div class="form-group">-->
+<!--        <label for="accountHolder">IBAN</label>-->
+<!--        <input matInput type="text" id="IBAN" name="IBAN" class="form-control" required minlength="4"-->
+<!--               [(ngModel)]="transfer.IBAN" #IBAN="ngModel">-->
+<!--      </div>-->
+
+<!--      <div class="form-group">-->
+<!--        <label for="amount">amount</label>-->
+<!--        <input type="text" id="amount" name="amount" class="form-control"-->
+<!--               [(ngModel)]="transfer.amount" #amount="ngModel">-->
+<!--        <div *ngIf="accountHolder.invalid && (accountHolder.dirty || accountHolder.touched)"-->
+<!--             class="alert">-->
+<!--          <div *ngIf="accountHolder.errors?.required">-->
+<!--            Name is required.-->
+<!--          </div>-->
+<!--          <div *ngIf="accountHolder.errors?.minlength">-->
+<!--            Name must be at least 4 characters long.-->
+<!--          </div>-->
+<!--          <div *ngIf="accountHolder.errors?.forbiddenName">-->
+<!--            Name cannot be Bob.-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="form-group">-->
+<!--        <label for="date">date</label>-->
+<!--        <input matInput type="text" id="date" name="date" class="form-control"-->
+<!--               [(ngModel)]="transfer.date" #date="ngModel">-->
+<!--        <div *ngIf="accountHolder.invalid && (accountHolder.dirty || accountHolder.touched)"-->
+<!--             class="alert">-->
+<!--          <div *ngIf="accountHolder.errors?.required">-->
+<!--            Name is required.-->
+<!--          </div>-->
+<!--          <div *ngIf="accountHolder.errors?.minlength">-->
+<!--            Name must be at least 4 characters long.-->
+<!--          </div>-->
+<!--          <div *ngIf="accountHolder.errors?.forbiddenName">-->
+<!--            Name cannot be Bob.-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="form-group">-->
+<!--        <label for="note">note</label>-->
+<!--        <input matInput type="text" id="note" name="note" class="form-control"-->
+<!--               [(ngModel)]="transfer.note" #note="ngModel">-->
+<!--        <div *ngIf="accountHolder.invalid && (accountHolder.dirty || accountHolder.touched)"-->
+<!--             class="alert">-->
+<!--          <div *ngIf="accountHolder.errors?.required">-->
+<!--            Name is required.-->
+<!--          </div>-->
+<!--          <div *ngIf="accountHolder.errors?.minlength">-->
+<!--            Name must be at least 4 characters long.-->
+<!--          </div>-->
+<!--          <div *ngIf="accountHolder.errors?.forbiddenName">-->
+<!--            Name cannot be Bob.-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <mat-form-field appearance="fill">-->
+<!--        <mat-label>Choose a date</mat-label>-->
+<!--        <input matInput [matDatepicker]="date">-->
+<!--        <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>-->
+<!--        <mat-datepicker #date></mat-datepicker>-->
+<!--      </mat-form-field>-->
+
+
 
 <!--      <div class="form-group">-->
 <!--        <label for="alterEgo">Alter Ego</label>-->
@@ -124,10 +183,8 @@
 <!--    </div>-->
 
     <p>Complete the form to enable the Submit button.</p>
-    <button type="submit"
-            [disabled]="heroForm.invalid" (click)="saveTutorial()">Submit</button>
-    <button type="button"
-            (click)="heroForm.resetForm({})">Reset</button>
+      <button type="button" mat-button color="secondary" (click)="heroForm.resetForm({})">Reset</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="heroForm.invalid" (click)="saveTutorial()">Submit</button>
   </div>
   </div>
 

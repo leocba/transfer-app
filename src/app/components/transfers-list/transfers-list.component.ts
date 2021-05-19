@@ -27,7 +27,7 @@ export class TransfersListComponent implements OnInit {
 
   transfers$: Observable<ITransfer[]>;
 
-  displayedColumns: string[] = ['id', 'accountHolder', 'note', 'actions'];
+  displayedColumns: string[] = ['id', 'accountHolder', 'IBAN', 'amount', 'date', 'note', 'actions'];
   dataSource: MatTableDataSource<ITransfer>;
 
   transfers: ITransfer[];

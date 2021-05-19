@@ -17,6 +17,20 @@ app.get('/api/transactions', (req, res) => {
   });
 })
 
+app.put('/api/:transaction', (req, res) => {
+  return res.json({status: 'ok'});
+})
+
+app.post('/', (req, res) => {
+  res.send('POST request to the homepage');
+});
+
+app.delete('/', function (req, res) {
+  res.send('DELETE request to homepage')
+})
+
+
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })

@@ -25,7 +25,25 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+
+import { AngularIbanModule } from 'angular-iban';
+
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
+
+registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+
+// import { AppModule } from './app/app.module';
+// import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+//
+// platformBrowserDynamic().bootstrapModule(AppModule, {
+//   providers: [{provide: LOCALE_ID, useValue: 'en-US' }]
+// });
 
 @NgModule({
   declarations: [
@@ -49,14 +67,17 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     MatSortModule,
     MatToolbarModule,
     MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25
     }),
+    AngularIbanModule,
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule
   ],
-  providers: [],
+  providers: [{provide: LOCALE_ID, useValue: 'de-DE' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

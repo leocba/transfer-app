@@ -6,7 +6,7 @@ import { TransferDetailsComponent } from './components/transfer-details/transfer
 import { AddTransferComponent } from './components/add-transfer/add-transfer.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'tutorials', pathMatch: 'full' },
+  { path: '', redirectTo: 'transfers', pathMatch: 'full' },
   { path: 'transfers', component: TransfersListComponent },
   { path: 'transfers/:id', component: TransferDetailsComponent },
   { path: 'add', component: AddTransferComponent }
