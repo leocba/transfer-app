@@ -35,6 +35,10 @@ import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
+import { AddTransferDialogComponent } from './components/add-transfer-dialog/add-transfer-dialog.component';
+
+import ngCurrency from 'ng-currency';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
@@ -51,7 +55,8 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     AddTransferComponent,
     TransferDetailsComponent,
     TransfersListComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    AddTransferDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +80,8 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     AngularIbanModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    CurrencyMaskModule
   ],
   providers: [{provide: LOCALE_ID, useValue: 'de-DE' }],
   bootstrap: [AppComponent]

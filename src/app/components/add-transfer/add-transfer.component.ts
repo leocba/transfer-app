@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ITransfer} from '../../ITransfer';
 import {CreateNewTransfer} from '../../store/actions';
 import {Store} from '@ngrx/store';
+import {ErrorStateMatcher} from '@angular/material/core';
+import {FormControl, FormGroupDirective, NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-add-transfer',
@@ -9,6 +11,7 @@ import {Store} from '@ngrx/store';
   styleUrls: ['./add-transfer.component.scss']
 })
 export class AddTransferComponent implements OnInit {
+  today = new Date();
 
   transfer: ITransfer = {
     id: 1,
@@ -18,6 +21,11 @@ export class AddTransferComponent implements OnInit {
     date: new Date(),
     note: ''
   };
+  //
+  // isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  //   const isSubmitted = form && form.submitted;
+  //   return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  // }
 
   constructor(
     private store: Store

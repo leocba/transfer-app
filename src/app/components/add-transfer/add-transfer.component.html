@@ -1,44 +1,38 @@
 <form #heroForm="ngForm" appIdentityRevealed>
   <div [hidden]="heroForm.submitted">
     <div class="cross-validation" [class.cross-validation-error]="heroForm.errors?.identityRevealed && (heroForm.touched || heroForm.dirty)">
-<!--      <div class="form-group">-->
-<!--        <label for="accountHolder">accountHolder</label>-->
-<!--        <input type="text" id="accountHolder" name="accountHolder" class="form-control"-->
-<!--               [(ngModel)]="transfer.accountHolder" #accountHolder="ngModel">-->
-<!--        <div *ngIf="accountHolder.invalid && (accountHolder.dirty || accountHolder.touched)"-->
-<!--             class="alert">-->
-<!--          <div *ngIf="accountHolder.errors?.required">-->
-<!--            Name is required.-->
-<!--          </div>-->
-<!--          <div *ngIf="accountHolder.errors?.minlength">-->
-<!--            Name must be at least 4 characters long.-->
-<!--          </div>-->
-<!--          <div *ngIf="accountHolder.errors?.forbiddenName">-->
-<!--            Name cannot be Bob.-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
 
       <mat-form-field class="fill">
         <mat-label>accountHolder</mat-label>
         <input matInput type="text" id="accountHolder" name="accountHolder"
                [(ngModel)]="transfer.accountHolder" #accountHolder="ngModel">
+        <mat-error *ngIf="accountHolder.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
       </mat-form-field>
 
       <br />
 
       <mat-form-field class="fill">
         <mat-label>IBAN</mat-label>
-        <input matInput type="text" id="IBAN" name="IBAN"
-               [(ngModel)]="transfer.IBAN" #IBAN="ngModel">
+        <input matInput id="IBAN" name="IBAN" class="form-control" #IBAN="ngModel" type="text" ibanValidator [(ngModel)]="transfer.IBAN" [ngModelOptions]="{standalone: true}" required autocomplete="off">
+        <mat-error *ngIf="IBAN.errors?.required">
+          IBAN <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="IBAN.errors?.iban">
+          IBAN <strong>invalid</strong>
+        </mat-error>
       </mat-form-field>
 
       <br />
 
       <mat-form-field class="fill">
         <mat-label>amount</mat-label>
-        <input matInput type="text" id="amount" name="amount"
+        <input matInput type="text" id="amount" name="amount" currencyMask  min="50" max="20000000" [options]="{ suffix: ' € ', prefix: '', thousands: '.', decimal: ',' }"
                [(ngModel)]="transfer.amount" #amount="ngModel">
+        <mat-error *ngIf="amount.invalid && (amount.dirty || amount.touched)">
+          Amount <strong>invalid</strong>
+        </mat-error>
       </mat-form-field>
 
       <br />
@@ -49,7 +43,7 @@
 
       <mat-form-field class="fill">
         <mat-label>date</mat-label>
-        <input matInput [matDatepicker]="date" [(ngModel)]="transfer.date" name="date">
+        <input matInput [matDatepicker]="date" [(ngModel)]="transfer.date" name="date" required [min]="today" (click)="date.open()" readonly>
         <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
         <mat-datepicker #date></mat-datepicker>
       </mat-form-field>
@@ -63,7 +57,7 @@
 
       <br />
 
-      <mat-form-field appearance="fill">
+      <mat-form-field class="fill">
         <mat-label>Textarea</mat-label>
         <textarea matInput  id="note" name="note"
                   [(ngModel)]="transfer.note" #note="ngModel"></textarea>
@@ -182,9 +176,8 @@
 <!--      </div>-->
 <!--    </div>-->
 
-    <p>Complete the form to enable the Submit button.</p>
       <button type="button" mat-button color="secondary" (click)="heroForm.resetForm({})">Reset</button>
-      <button type="submit" mat-raised-button color="primary" [disabled]="heroForm.invalid" (click)="saveTutorial()">Submit</button>
+      <button type="submit" mat-dialog-close mat-raised-button color="primary" [disabled]="heroForm.invalid" (click)="saveTutorial()">Submit</button>
   </div>
   </div>
 
