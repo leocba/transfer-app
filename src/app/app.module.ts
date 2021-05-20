@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddTransferComponent } from './components/add-transfer/add-transfer.component';
-import { TransferDetailsComponent } from './components/transfer-details/transfer-details.component';
+import { EditTransferComponent } from './components/edit-transfer/edit-transfer.component';
 import { TransfersListComponent } from './components/transfers-list/transfers-list.component';
 
 import { FormsModule } from '@angular/forms';
@@ -54,7 +54,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
   declarations: [
     AppComponent,
     AddTransferComponent,
-    TransferDetailsComponent,
+    EditTransferComponent,
     TransfersListComponent,
     ConfirmDialogComponent,
     AddTransferDialogComponent,

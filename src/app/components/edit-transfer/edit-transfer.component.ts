@@ -5,10 +5,10 @@ import {CreateNewTransfer, UpdateTransfer} from '../../store/actions';
 
 @Component({
   selector: 'app-transfer-details',
-  templateUrl: './transfer-details.component.html',
-  styleUrls: ['./transfer-details.component.scss']
+  templateUrl: './edit-transfer.component.html',
+  styleUrls: ['./edit-transfer.component.scss']
 })
-export class TransferDetailsComponent implements OnInit {
+export class EditTransferComponent implements OnInit {
 
   @Input() data: ITransfer;
 
