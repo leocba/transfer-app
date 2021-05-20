@@ -37,7 +37,7 @@ import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { AddTransferDialogComponent } from './components/add-transfer-dialog/add-transfer-dialog.component';
 
-import ngCurrency from 'ng-currency';
+// import ngCurrency from 'ng-currency';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { EditTransferDialogComponent } from './components/edit-transfer-dialog/edit-transfer-dialog.component';
 

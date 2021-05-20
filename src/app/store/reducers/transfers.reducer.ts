@@ -50,7 +50,6 @@ function createNewTransfer(state: TransfersState, payload: ITransfer): Transfers
 }
 
 function updateTransfer(state: TransfersState, payload: ITransfer): TransfersState {
-  debugger
   const transfers = [...state.transfers];
   const  foundIndex = transfers.findIndex(x => x.id === payload.id);
   transfers[foundIndex] = payload;
@@ -60,7 +59,7 @@ function updateTransfer(state: TransfersState, payload: ITransfer): TransfersSta
   };
 }
 
-function deleteTransfer(state: TransfersState, payload: number): TransfersState {
+function deleteTransfer(state: TransfersState, payload: string): TransfersState {
   const transfers = [...state.transfers];
   const newState = transfers.filter(x => x.id !== payload);
   return {

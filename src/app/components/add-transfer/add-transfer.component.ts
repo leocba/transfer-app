@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ITransfer} from '../../ITransfer';
 import {CreateNewTransfer} from '../../store/actions';
 import {Store} from '@ngrx/store';
+import { UUID } from 'angular2-uuid';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {FormControl, FormGroupDirective, NgForm} from '@angular/forms';
 
@@ -14,7 +15,7 @@ export class AddTransferComponent implements OnInit {
   today = new Date();
 
   transfer: ITransfer = {
-    id: 1,
+    id: UUID.UUID(),
     accountHolder: '',
     IBAN: '',
     amount: 0,

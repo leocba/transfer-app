@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, Input, NgZone, OnInit, ViewChild} from '@angular/core';
 
-import { ITransfer } from '../../ITransfer';
-import { TransferService } from '../../services/transfer.service';
-import { Store, select } from '@ngrx/store';
+import {ITransfer} from '../../ITransfer';
+import {TransferService} from '../../services/transfer.service';
+import {Store, select} from '@ngrx/store';
 
 import {
   DeleteTransfer,
   LoadTransfers
 } from '../../store/actions/transfers.action';
-import {MatSort} from '@angular/material/sort';
+import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {Observable} from 'rxjs';
 import {getAllTransfers} from '../../store/reducers';
@@ -42,11 +42,11 @@ export class TransfersListComponent implements OnInit {
     this.transfers$ = this.store.select(getAllTransfers);
   }
 
-  openDialog(id: number) {
+  openDialog(id: string) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result){
+      if (result) {
         this.store.dispatch(new DeleteTransfer(id));
       }
       console.log(`Dialog result: ${result} ${id}`);
@@ -56,7 +56,7 @@ export class TransfersListComponent implements OnInit {
   openEditDialog(transfer: ITransfer) {
     this.dialog.open(EditTransferDialogComponent, {
       width: '250px',
-      data: { transfer }
+      data: {transfer}
     });
   }
 
@@ -80,19 +80,38 @@ export class TransfersListComponent implements OnInit {
         return data.accountHolder.toLowerCase().indexOf(filter) !== -1 || data.note.toLowerCase().indexOf(filter) !== -1;
       };
     });
-    // this.transferService
-    //   .getAll()
-    //   .subscribe((transfers) => {
-    //     this.store.dispatch(new LoadTransfers(transfers.list));
-    //     this.transfers = transfers.list;
-    //
-    //     this.dataSource = new MatTableDataSource(transfers.list);
-    //     this.dataSource.sort = this.sort;
-    //
-    //     this.dataSource.filterPredicate = (data: ITransfer, filter: string) => {
-    //       return data.accountHolder.toLowerCase().indexOf(filter) !== -1 || data.note.toLowerCase().indexOf(filter) !== -1;
-    //     };
-    //   });
+  }
+
+  sortData(sort: Sort) {
+    this.transfers$.subscribe((transfers) => {
+      this.dataSource = new MatTableDataSource(transfers);
+
+      if (!sort.active || sort.direction === '') {
+        // this.dataSource = new MatTableDataSource(transfers);
+        this.dataSource.sort = this.sort;
+        return;
+      }
+
+      const isAsc = sort.direction === 'asc';
+
+      if (sort.active === 'date') {
+        this.dataSource = new MatTableDataSource([...transfers].sort((a, b) => {
+          if (isAsc) {
+            // @ts-ignore
+            return new Date(a.date) - new Date(b.date);
+          } else {
+            // @ts-ignore
+            return new Date(b.date) - new Date(a.date);
+          }
+        }));
+      }
+
+      if (sort.active === 'amount') {
+        this.dataSource = new MatTableDataSource([...transfers].sort((a, b) => {
+          return (a.amount < b.amount ? -1 : 1) * (isAsc ? 1 : -1);
+        }));
+      }
+    });
   }
 
   applyFilter(filterValue: string) {
@@ -120,25 +139,25 @@ export class TransfersListComponent implements OnInit {
 //       });
 //   }
 
-  // getTransfers(): void {
-  //   this.transfers = this.transferService.getAll();
+// getTransfers(): void {
+//   this.transfers = this.transferService.getAll();
 
-  //   this.heroService.getAll()
-  //     .subscribe(heroes => this.heroes = heroes);
-  // }
+//   this.heroService.getAll()
+//     .subscribe(heroes => this.heroes = heroes);
+// }
 
-  // add(name: string): void {
-  //   name = name.trim();
-  //   if (!name) { return; }
-  //   this.heroService.addHero({ name } as Hero)
-  //     .subscribe(hero => {
-  //       this.heroes.push(hero);
-  //     });
-  // }
-  //
-  // delete(hero: Hero): void {
-  //   this.heroes = this.heroes.filter(h => h !== hero);
-  //   this.heroService.deleteHero(hero.id).subscribe();
-  // }
+// add(name: string): void {
+//   name = name.trim();
+//   if (!name) { return; }
+//   this.heroService.addHero({ name } as Hero)
+//     .subscribe(hero => {
+//       this.heroes.push(hero);
+//     });
+// }
+//
+// delete(hero: Hero): void {
+//   this.heroes = this.heroes.filter(h => h !== hero);
+//   this.heroService.deleteHero(hero.id).subscribe();
+// }
 
 // }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { TRANSFERS } from '../mock-data';
+// import { TRANSFERS } from '../mock-data';
 import {ITransfer} from '../ITransfer';
 
 const baseUrl = 'http://localhost:3000/api';

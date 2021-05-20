@@ -1,5 +1,5 @@
 export interface ITransfer {
-  id: number;
+  id: string;
   accountHolder: string;
   IBAN: string;
   amount: number;
