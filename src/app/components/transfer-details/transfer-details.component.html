@@ -1,1 +1,64 @@
-<p>transfer-details works!</p>
+<form #heroForm="ngForm" appIdentityRevealed>
+  <div [hidden]="heroForm.submitted">
+    <div class="cross-validation" [class.cross-validation-error]="heroForm.errors?.identityRevealed && (heroForm.touched || heroForm.dirty)">
+
+      <mat-form-field class="fill">
+        <mat-label>accountHolder</mat-label>
+        <input matInput type="text" id="accountHolder" name="accountHolder"
+               [(ngModel)]="transfer.accountHolder" #accountHolder="ngModel">
+        <mat-error *ngIf="accountHolder.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <br />
+
+      <mat-form-field class="fill">
+        <mat-label>IBAN</mat-label>
+        <input matInput id="IBAN" name="IBAN" class="form-control" #IBAN="ngModel" type="text" ibanValidator [(ngModel)]="transfer.IBAN" [ngModelOptions]="{standalone: true}" required autocomplete="off">
+        <mat-error *ngIf="IBAN.errors?.required">
+          IBAN <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="IBAN.errors?.iban">
+          IBAN <strong>invalid</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <br />
+
+      <mat-form-field class="fill">
+        <mat-label>amount</mat-label>
+        <input matInput type="text" id="amount" name="amount" currencyMask  min="50" max="20000000" [options]="{ suffix: ' € ', prefix: '', thousands: '.', decimal: ',' }"
+               [(ngModel)]="transfer.amount" #amount="ngModel">
+        <mat-error *ngIf="amount.invalid && (amount.dirty || amount.touched)">
+          Amount <strong>invalid</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <br />
+
+      <mat-form-field class="fill">
+        <mat-label>date</mat-label>
+        <input matInput [matDatepicker]="date" [(ngModel)]="transfer.date" name="date" required [min]="today" (click)="date.open()" readonly>
+        <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+        <mat-datepicker #date></mat-datepicker>
+      </mat-form-field>
+
+      <br />
+
+      <mat-form-field class="fill">
+        <mat-label>Textarea</mat-label>
+        <textarea matInput  id="note" name="note"
+                  [(ngModel)]="transfer.note" #note="ngModel"></textarea>
+      </mat-form-field>
+
+      <button type="button" mat-button color="secondary" (click)="heroForm.resetForm({})">Reset</button>
+      <button type="submit" mat-dialog-close mat-raised-button color="primary" [disabled]="heroForm.invalid" (click)="saveTutorial()">Submit</button>
+    </div>
+  </div>
+
+  <!--  <div class="submitted-message" *ngIf="heroForm.submitted">-->
+  <!--    <p>You've submitted your hero, {{ heroForm.value.name }}!</p>-->
+  <!--    <button (click)="heroForm.resetForm({})">Add new hero</button>-->
+  <!--  </div>-->
+</form>

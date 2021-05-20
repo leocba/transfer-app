@@ -3,7 +3,7 @@ import {ITransfer} from '../../ITransfer';
 import {CreateNewTransfer} from '../../store/actions';
 import {Store} from '@ngrx/store';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {FormControl, FormGroupDirective, NgForm} from "@angular/forms";
+import {FormControl, FormGroupDirective, NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-add-transfer',
@@ -45,16 +45,5 @@ export class AddTransferComponent implements OnInit {
     };
 
     this.store.dispatch(new CreateNewTransfer(data));
-
-  //   this.tutorialService.create(data)
-  //     .subscribe(
-  //       response => {
-  //         console.log(response);
-  //         this.submitted = true;
-  //       },
-  //       error => {
-  //         console.log(error);
-  //       });
   }
-
 }

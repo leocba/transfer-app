@@ -14,7 +14,8 @@ import {Observable} from 'rxjs';
 import {getAllTransfers} from '../../store/reducers';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
-import {AddTransferDialogComponent} from "../add-transfer-dialog/add-transfer-dialog.component";
+import {AddTransferDialogComponent} from '../add-transfer-dialog/add-transfer-dialog.component';
+import {EditTransferDialogComponent} from '../edit-transfer-dialog/edit-transfer-dialog.component';
 
 @Component({
   selector: 'app-transfers-list',
@@ -49,6 +50,13 @@ export class TransfersListComponent implements OnInit {
         this.store.dispatch(new DeleteTransfer(id));
       }
       console.log(`Dialog result: ${result} ${id}`);
+    });
+  }
+
+  openEditDialog(transfer: ITransfer) {
+    this.dialog.open(EditTransferDialogComponent, {
+      width: '250px',
+      data: { transfer }
     });
   }
 

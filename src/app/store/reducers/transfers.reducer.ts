@@ -50,6 +50,7 @@ function createNewTransfer(state: TransfersState, payload: ITransfer): Transfers
 }
 
 function updateTransfer(state: TransfersState, payload: ITransfer): TransfersState {
+  debugger
   const transfers = [...state.transfers];
   const  foundIndex = transfers.findIndex(x => x.id === payload.id);
   transfers[foundIndex] = payload;

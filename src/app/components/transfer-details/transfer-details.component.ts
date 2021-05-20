@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import {ITransfer} from '../../ITransfer';
+import {Store} from '@ngrx/store';
+import {CreateNewTransfer, UpdateTransfer} from '../../store/actions';
 
 @Component({
   selector: 'app-transfer-details',
@@ -7,9 +10,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TransferDetailsComponent implements OnInit {
 
-  constructor() { }
+  @Input() data: ITransfer;
+
+  today = new Date();
+  transfer: ITransfer;
+
+  constructor(
+    private store: Store,
+  ) {
+  }
 
   ngOnInit(): void {
+    this.transfer = { ...this.data };
+  }
+
+  saveTutorial(): void {
+    const data: ITransfer = {
+      id: this.transfer.id,
+      accountHolder: this.transfer.accountHolder,
+      IBAN: this.transfer.IBAN,
+      amount: this.transfer.amount,
+      date: this.transfer.date,
+      note: this.transfer.note
+    };
+
+    this.store.dispatch(new UpdateTransfer(data));
   }
 
 }
