@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ITransfer} from '../../ITransfer';
 import {CreateNewTransfer} from '../../store/actions';
 import {Store} from '@ngrx/store';
-import { UUID } from 'angular2-uuid';
-import {ErrorStateMatcher} from '@angular/material/core';
-import {FormControl, FormGroupDirective, NgForm} from '@angular/forms';
+import {UUID} from 'angular2-uuid';
 
 @Component({
   selector: 'app-add-transfer',

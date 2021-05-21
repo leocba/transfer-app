@@ -1,14 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {StoreModule} from '@ngrx/store';
 import { EditTransferComponent } from './edit-transfer.component';
+import {FormsModule} from '@angular/forms';
 
-describe('TransferDetailsComponent', () => {
+describe('EditTransferComponent', () => {
   let component: EditTransferComponent;
   let fixture: ComponentFixture<EditTransferComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditTransferComponent ]
+      declarations: [ EditTransferComponent ],
+      imports: [
+        StoreModule.forRoot({}),
+        FormsModule]
     })
     .compileComponents();
   });

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EditTransferDialogComponent } from './edit-transfer-dialog.component';
 
 describe('EditTransferDialogComponent', () => {
@@ -8,7 +8,12 @@ describe('EditTransferDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditTransferDialogComponent ]
+      declarations: [ EditTransferDialogComponent ],
+      imports: [MatDialogModule],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} }
+      ]
     })
     .compileComponents();
   });
