@@ -1,13 +1,10 @@
-import {AfterViewInit, Component, Input, NgZone, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 
 import {ITransfer} from '../../ITransfer';
 import {TransferService} from '../../services/transfer.service';
-import {Store, select} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 
-import {
-  DeleteTransfer,
-  LoadTransfers
-} from '../../store/actions/transfers.action';
+import {DeleteTransfer} from '../../store/actions/transfers.action';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {Observable} from 'rxjs';
@@ -32,7 +29,10 @@ export class TransfersListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'accountHolder', 'IBAN', 'amount', 'date', 'note', 'actions'];
   dataSource: MatTableDataSource<ITransfer>;
 
-  transfers: ITransfer[];
+  dialogOptions = {
+    width: '350px',
+    maxWidth: '80vh'
+  };
 
   constructor(
     private transferService: TransferService,
@@ -49,26 +49,18 @@ export class TransfersListComponent implements OnInit {
       if (result) {
         this.store.dispatch(new DeleteTransfer(id));
       }
-      console.log(`Dialog result: ${result} ${id}`);
     });
   }
 
   openEditDialog(transfer: ITransfer) {
     this.dialog.open(EditTransferDialogComponent, {
-      width: '250px',
+      ...this.dialogOptions,
       data: {transfer}
     });
   }
 
   openAddDialog() {
-    const dialogRef = this.dialog.open(AddTransferDialogComponent);
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result){
-    //     this.store.dispatch(new DeleteTransfer(id));
-    //   }
-    //   console.log(`Dialog result: ${result} ${id}`);
-    // });
+    this.dialog.open(AddTransferDialogComponent, this.dialogOptions);
   }
 
   ngOnInit() {
@@ -87,7 +79,6 @@ export class TransfersListComponent implements OnInit {
       this.dataSource = new MatTableDataSource(transfers);
 
       if (!sort.active || sort.direction === '') {
-        // this.dataSource = new MatTableDataSource(transfers);
         this.dataSource.sort = this.sort;
         return;
       }
@@ -115,49 +106,8 @@ export class TransfersListComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
 }
-
-
-// export class TransfersListComponent implements OnInit {
-//   transfers: ITransfer[];
-//
-//   constructor(
-//     private transferService: TransferService,
-//     private store: Store
-//   ) { }
-//
-//   ngOnInit() {
-//     this.transferService
-//       .getAll()
-//       .subscribe((transfers) => {
-//         this.store.dispatch(new LoadTransfers(transfers.list));
-//         this.transfers = transfers.list;
-//       });
-//   }
-
-// getTransfers(): void {
-//   this.transfers = this.transferService.getAll();
-
-//   this.heroService.getAll()
-//     .subscribe(heroes => this.heroes = heroes);
-// }
-
-// add(name: string): void {
-//   name = name.trim();
-//   if (!name) { return; }
-//   this.heroService.addHero({ name } as Hero)
-//     .subscribe(hero => {
-//       this.heroes.push(hero);
-//     });
-// }
-//
-// delete(hero: Hero): void {
-//   this.heroes = this.heroes.filter(h => h !== hero);
-//   this.heroService.deleteHero(hero.id).subscribe();
-// }
-
-// }

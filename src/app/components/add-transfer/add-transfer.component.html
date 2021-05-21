@@ -1,188 +1,49 @@
-<form #heroForm="ngForm" appIdentityRevealed>
-  <div [hidden]="heroForm.submitted">
-    <div class="cross-validation" [class.cross-validation-error]="heroForm.errors?.identityRevealed && (heroForm.touched || heroForm.dirty)">
+<h2>Create transaction</h2>
 
-      <mat-form-field class="fill">
-        <mat-label>accountHolder</mat-label>
-        <input matInput type="text" id="accountHolder" name="accountHolder"
-               [(ngModel)]="transfer.accountHolder" #accountHolder="ngModel">
-        <mat-error *ngIf="accountHolder.hasError('required')">
-          Email is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+<form #transferForm="ngForm">
+  <mat-form-field class="fill">
+    <mat-label>Account Holder</mat-label>
+    <input matInput type="text" id="accountHolder" name="accountHolder"
+           [(ngModel)]="transfer.accountHolder" #accountHolder="ngModel">
+  </mat-form-field>
 
-      <br />
+  <mat-form-field class="fill">
+    <mat-label>IBAN</mat-label>
+    <input matInput id="IBAN" name="IBAN" class="form-control" #IBAN="ngModel" type="text" ibanValidator
+           [(ngModel)]="transfer.IBAN" [ngModelOptions]="{standalone: true}" required autocomplete="off">
+    <mat-error *ngIf="IBAN.errors?.required">
+      IBAN required
+    </mat-error>
+    <mat-error *ngIf="IBAN.errors?.iban">
+      IBAN invalid
+    </mat-error>
+  </mat-form-field>
 
-      <mat-form-field class="fill">
-        <mat-label>IBAN</mat-label>
-        <input matInput id="IBAN" name="IBAN" class="form-control" #IBAN="ngModel" type="text" ibanValidator [(ngModel)]="transfer.IBAN" [ngModelOptions]="{standalone: true}" required autocomplete="off">
-        <mat-error *ngIf="IBAN.errors?.required">
-          IBAN <strong>required</strong>
-        </mat-error>
-        <mat-error *ngIf="IBAN.errors?.iban">
-          IBAN <strong>invalid</strong>
-        </mat-error>
-      </mat-form-field>
+  <mat-form-field class="fill">
+    <mat-label>Amount</mat-label>
+    <input matInput type="text" id="amount" name="amount" currencyMask min="50" max="20000000"
+           [options]="{ suffix: ' € ', prefix: '', thousands: '.', decimal: ',' }"
+           [(ngModel)]="transfer.amount" #amount="ngModel">
+    <mat-error *ngIf="amount.invalid && (amount.dirty || amount.touched)">
+      Amount invalid
+    </mat-error>
+  </mat-form-field>
 
-      <br />
+  <mat-form-field class="fill">
+    <mat-label>Date</mat-label>
+    <input matInput [matDatepicker]="date" [(ngModel)]="transfer.date" name="date" required [min]="today"
+           (click)="date.open()" readonly>
+    <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+    <mat-datepicker #date></mat-datepicker>
+  </mat-form-field>
 
-      <mat-form-field class="fill">
-        <mat-label>amount</mat-label>
-        <input matInput type="text" id="amount" name="amount" currencyMask  min="50" max="20000000" [options]="{ suffix: ' € ', prefix: '', thousands: '.', decimal: ',' }"
-               [(ngModel)]="transfer.amount" #amount="ngModel">
-        <mat-error *ngIf="amount.invalid && (amount.dirty || amount.touched)">
-          Amount <strong>invalid</strong>
-        </mat-error>
-      </mat-form-field>
+  <mat-form-field class="fill">
+    <mat-label>Note</mat-label>
+    <textarea matInput id="note" name="note" [(ngModel)]="transfer.note" #note="ngModel"></textarea>
+  </mat-form-field>
 
-      <br />
-
-<!--      <input matInput [matDatepicker]="date" [(ngModel)]="transfer.amount">-->
-<!--      <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>-->
-<!--      <mat-datepicker #date></mat-datepicker>-->
-
-      <mat-form-field class="fill">
-        <mat-label>date</mat-label>
-        <input matInput [matDatepicker]="date" [(ngModel)]="transfer.date" name="date" required [min]="today" (click)="date.open()" readonly>
-        <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
-        <mat-datepicker #date></mat-datepicker>
-      </mat-form-field>
-
-<!--      <mat-form-field appearance="fill">-->
-<!--        <mat-label>Choose a date</mat-label>-->
-<!--        <input matInput [matDatepicker]="date" disabled>-->
-<!--        <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>-->
-<!--        <mat-datepicker #date disabled="false"></mat-datepicker>-->
-<!--      </mat-form-field>-->
-
-      <br />
-
-      <mat-form-field class="fill">
-        <mat-label>Textarea</mat-label>
-        <textarea matInput  id="note" name="note"
-                  [(ngModel)]="transfer.note" #note="ngModel"></textarea>
-      </mat-form-field>
-
-<!--      <mat-form-field class="fill">-->
-<!--        <mat-label>note</mat-label>-->
-<!--        <textarea  matInput id="note" name="note"-->
-<!--               [(ngModel)]="transfer.note" #note="ngModel" />-->
-<!--      </mat-form-field>-->
-
-
-<!--      <div class="form-group">-->
-<!--        <label for="accountHolder">IBAN</label>-->
-<!--        <input matInput type="text" id="IBAN" name="IBAN" class="form-control" required minlength="4"-->
-<!--               [(ngModel)]="transfer.IBAN" #IBAN="ngModel">-->
-<!--      </div>-->
-
-<!--      <div class="form-group">-->
-<!--        <label for="amount">amount</label>-->
-<!--        <input type="text" id="amount" name="amount" class="form-control"-->
-<!--               [(ngModel)]="transfer.amount" #amount="ngModel">-->
-<!--        <div *ngIf="accountHolder.invalid && (accountHolder.dirty || accountHolder.touched)"-->
-<!--             class="alert">-->
-<!--          <div *ngIf="accountHolder.errors?.required">-->
-<!--            Name is required.-->
-<!--          </div>-->
-<!--          <div *ngIf="accountHolder.errors?.minlength">-->
-<!--            Name must be at least 4 characters long.-->
-<!--          </div>-->
-<!--          <div *ngIf="accountHolder.errors?.forbiddenName">-->
-<!--            Name cannot be Bob.-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <div class="form-group">-->
-<!--        <label for="date">date</label>-->
-<!--        <input matInput type="text" id="date" name="date" class="form-control"-->
-<!--               [(ngModel)]="transfer.date" #date="ngModel">-->
-<!--        <div *ngIf="accountHolder.invalid && (accountHolder.dirty || accountHolder.touched)"-->
-<!--             class="alert">-->
-<!--          <div *ngIf="accountHolder.errors?.required">-->
-<!--            Name is required.-->
-<!--          </div>-->
-<!--          <div *ngIf="accountHolder.errors?.minlength">-->
-<!--            Name must be at least 4 characters long.-->
-<!--          </div>-->
-<!--          <div *ngIf="accountHolder.errors?.forbiddenName">-->
-<!--            Name cannot be Bob.-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <div class="form-group">-->
-<!--        <label for="note">note</label>-->
-<!--        <input matInput type="text" id="note" name="note" class="form-control"-->
-<!--               [(ngModel)]="transfer.note" #note="ngModel">-->
-<!--        <div *ngIf="accountHolder.invalid && (accountHolder.dirty || accountHolder.touched)"-->
-<!--             class="alert">-->
-<!--          <div *ngIf="accountHolder.errors?.required">-->
-<!--            Name is required.-->
-<!--          </div>-->
-<!--          <div *ngIf="accountHolder.errors?.minlength">-->
-<!--            Name must be at least 4 characters long.-->
-<!--          </div>-->
-<!--          <div *ngIf="accountHolder.errors?.forbiddenName">-->
-<!--            Name cannot be Bob.-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <mat-form-field appearance="fill">-->
-<!--        <mat-label>Choose a date</mat-label>-->
-<!--        <input matInput [matDatepicker]="date">-->
-<!--        <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>-->
-<!--        <mat-datepicker #date></mat-datepicker>-->
-<!--      </mat-form-field>-->
-
-
-
-<!--      <div class="form-group">-->
-<!--        <label for="alterEgo">Alter Ego</label>-->
-<!--        <input type="text"-->
-<!--               id="alterEgo"-->
-<!--               name="alterEgo"-->
-<!--               #alterEgo="ngModel"-->
-<!--               [(ngModel)]="hero.alterEgo"-->
-<!--               [ngModelOptions]="{ updateOn: 'blur' }"-->
-<!--               appUniqueAlterEgo>-->
-
-<!--        <div *ngIf="alterEgo.pending">Validating...</div>-->
-<!--        <div *ngIf="alterEgo.invalid" class="alert alter-ego-errors">-->
-<!--          <div *ngIf="alterEgo.errors?.uniqueAlterEgo">-->
-<!--            Alter ego is already taken.-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <div *ngIf="heroForm.errors?.identityRevealed && (heroForm.touched || heroForm.dirty)" class="cross-validation-error-message alert">-->
-<!--        Name cannot match alter ego.-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <div class="form-group">-->
-<!--      <label for="power">Hero Power</label>-->
-<!--      <select id="power"-->
-<!--              name="power"-->
-<!--              required [(ngModel)]="hero.power"-->
-<!--              #power="ngModel">-->
-<!--        <option *ngFor="let p of powers" [value]="p">{{p}}</option>-->
-<!--      </select>-->
-
-<!--      <div *ngIf="power.errors && power.touched" class="alert">-->
-<!--        <div *ngIf="power.errors.required">Power is required.</div>-->
-<!--      </div>-->
-<!--    </div>-->
-
-      <button type="button" mat-button color="secondary" (click)="heroForm.resetForm({})">Reset</button>
-      <button type="submit" mat-dialog-close mat-raised-button color="primary" [disabled]="heroForm.invalid" (click)="saveTutorial()">Submit</button>
+  <div class="btn-group">
+    <button type="button" mat-stroked-button mat-dialog-close>Cancel</button>
+    <button type="submit" mat-dialog-close mat-raised-button color="primary" [disabled]="transferForm.invalid || IBAN.errors" (click)="save()">Save</button>
   </div>
-  </div>
-
-<!--  <div class="submitted-message" *ngIf="heroForm.submitted">-->
-<!--    <p>You've submitted your hero, {{ heroForm.value.name }}!</p>-->
-<!--    <button (click)="heroForm.resetForm({})">Add new hero</button>-->
-<!--  </div>-->
 </form>

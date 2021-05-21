@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ITransfer} from '../../ITransfer';
 import {Store} from '@ngrx/store';
-import {CreateNewTransfer, UpdateTransfer} from '../../store/actions';
+import {UpdateTransfer} from '../../store/actions';
 
 @Component({
   selector: 'app-transfer-details',
@@ -21,10 +21,10 @@ export class EditTransferComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.transfer = { ...this.data };
+    this.transfer = {...this.data};
   }
 
-  saveTutorial(): void {
+  save(): void {
     const data: ITransfer = {
       id: this.transfer.id,
       accountHolder: this.transfer.accountHolder,
@@ -36,5 +36,4 @@ export class EditTransferComponent implements OnInit {
 
     this.store.dispatch(new UpdateTransfer(data));
   }
-
 }

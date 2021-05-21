@@ -22,11 +22,6 @@ export class AddTransferComponent implements OnInit {
     date: new Date(),
     note: ''
   };
-  //
-  // isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-  //   const isSubmitted = form && form.submitted;
-  //   return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  // }
 
   constructor(
     private store: Store
@@ -35,7 +30,7 @@ export class AddTransferComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  saveTutorial(): void {
+  save(): void {
     const data: ITransfer = {
       id: this.transfer.id,
       accountHolder: this.transfer.accountHolder,

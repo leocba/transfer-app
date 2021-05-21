@@ -1,0 +1,15 @@
+mat-form-field {
+  display: block;
+  margin-bottom: .5rem;
+}
+
+.btn-group {
+  display: flex;
+
+  button {
+    flex-grow: 1;
+    & + button {
+      margin-left: 5px;
+    }
+  }
+}
