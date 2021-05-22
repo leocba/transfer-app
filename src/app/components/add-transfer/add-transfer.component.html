@@ -1,6 +1,6 @@
 <h2>Create transaction</h2>
 
-<form #transferForm="ngForm">
+<form id="form-create" #transferForm="ngForm">
   <mat-form-field class="fill">
     <mat-label>Account Holder</mat-label>
     <input matInput type="text" id="accountHolder" name="accountHolder"
@@ -31,7 +31,7 @@
 
   <mat-form-field class="fill">
     <mat-label>Date</mat-label>
-    <input matInput [matDatepicker]="date" [(ngModel)]="transfer.date" name="date" required [min]="today"
+    <input id="date" matInput [matDatepicker]="date" [(ngModel)]="transfer.date" name="date" required [min]="today"
            (click)="date.open()" readonly>
     <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
     <mat-datepicker #date></mat-datepicker>
@@ -44,6 +44,6 @@
 
   <div class="btn-group">
     <button type="button" mat-stroked-button mat-dialog-close>Cancel</button>
-    <button type="submit" mat-dialog-close mat-raised-button color="primary" [disabled]="transferForm.invalid || IBAN.errors" (click)="save()">Save</button>
+    <button id="btn-save" type="submit" mat-dialog-close mat-raised-button color="primary" [disabled]="transferForm.invalid || IBAN.errors" (click)="save()">Save</button>
   </div>
 </form>

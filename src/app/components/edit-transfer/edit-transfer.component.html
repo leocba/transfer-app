@@ -1,6 +1,6 @@
 <h2>Edit transaction</h2>
 
-<form #transferForm="ngForm">
+<form id="form-update" #transferForm="ngForm">
   <mat-form-field class="fill">
     <mat-label>ID</mat-label>
     <input matInput type="text" id="id" name="id" [(ngModel)]="transfer.id" #id="ngModel" readonly>
@@ -49,7 +49,7 @@
 
   <div class="btn-group">
     <button type="button" mat-stroked-button mat-dialog-close>Cancel</button>
-    <button type="submit" mat-dialog-close mat-raised-button color="primary"
+    <button id="btn-save" type="submit" mat-dialog-close mat-raised-button color="primary"
             [disabled]="transferForm.invalid || IBAN.errors" (click)="save()">Save
     </button>
   </div>
