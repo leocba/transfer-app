@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 
 import {ITransfer} from '../../ITransfer';
 import {TransferService} from '../../services/transfer.service';
@@ -26,13 +26,30 @@ export class TransfersListComponent implements OnInit {
 
   transfers$: Observable<ITransfer[]>;
 
-  displayedColumns: string[] = ['id', 'accountHolder', 'IBAN', 'amount', 'date', 'note', 'actions'];
+  displayedColumns: string[] = ['accountHolder', 'amount', 'date', 'actions'];
   dataSource: MatTableDataSource<ITransfer>;
 
   dialogOptions = {
     width: '350px',
     maxWidth: '80vh'
   };
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.updateTableColumns(window.innerWidth);
+  }
+
+  updateTableColumns(innerWidth: number) {
+    if (innerWidth > 1200) {
+      this.displayedColumns = ['id', 'accountHolder', 'IBAN', 'amount', 'date', 'note', 'actions'];
+    } else if (innerWidth > 992) {
+      this.displayedColumns = ['accountHolder', 'IBAN', 'amount', 'date', 'note', 'actions'];
+    } else if (innerWidth > 768) {
+      this.displayedColumns = ['accountHolder', 'IBAN', 'amount', 'date', 'actions'];
+    } else {
+      this.displayedColumns = ['accountHolder', 'amount', 'date', 'actions'];
+    }
+  }
 
   constructor(
     private transferService: TransferService,
@@ -72,6 +89,7 @@ export class TransfersListComponent implements OnInit {
         return data.accountHolder.toLowerCase().indexOf(filter) !== -1 || data.note.toLowerCase().indexOf(filter) !== -1;
       };
     });
+    this.updateTableColumns(window.innerWidth);
   }
 
   sortData(sort: Sort) {
