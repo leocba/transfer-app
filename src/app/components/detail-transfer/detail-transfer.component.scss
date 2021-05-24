@@ -1,0 +1,21 @@
+.details-card {
+  padding: 0;
+
+  mat-icon.header-icon {
+    font-size: 48px;
+  }
+
+  .card-item {
+    display: flex;
+    align-items: center;
+    padding: .75em 0;
+
+    strong {
+      width: 60px;
+    }
+  }
+
+  .btn-close {
+    width: 100%;
+  }
+}

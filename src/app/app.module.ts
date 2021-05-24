@@ -34,6 +34,8 @@ import {DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE} fro
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatCardModule} from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
 
 import {
   MAT_MOMENT_DATE_FORMATS,
@@ -51,6 +53,8 @@ import {AddTransferDialogComponent} from './components/add-transfer-dialog/add-t
 
 import {CurrencyMaskModule} from 'ng2-currency-mask';
 import {EditTransferDialogComponent} from './components/edit-transfer-dialog/edit-transfer-dialog.component';
+import { DetailTransferComponent } from './components/detail-transfer/detail-transfer.component';
+import { DetailTransferDialogComponent } from './components/detail-transfer-dialog/detail-transfer-dialog.component';
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
@@ -62,11 +66,15 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     TransfersListComponent,
     ConfirmDialogComponent,
     AddTransferDialogComponent,
-    EditTransferDialogComponent
+    EditTransferDialogComponent,
+    DetailTransferComponent,
+    DetailTransferDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatDividerModule,
+    MatListModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,

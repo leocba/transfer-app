@@ -1,0 +1,29 @@
+<mat-card class="details-card mat-elevation-z0">
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon class="header-icon material-icons-outlined" color="primary">person_outline</mat-icon>
+    </div>
+    <mat-card-title>{{data.accountHolder}}</mat-card-title>
+    <mat-card-subtitle>{{data.IBAN | ibanFormatter}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="card-item">
+      <strong>ID</strong> {{data.id}}
+    </div>
+    <mat-divider></mat-divider>
+    <div class="card-item">
+      <strong>Amount</strong> {{data.amount | currency: 'EUR'}}
+    </div>
+    <mat-divider></mat-divider>
+    <div class="card-item">
+      <strong>Date</strong>{{data.date | date}}
+    </div>
+    <mat-divider></mat-divider>
+    <div class="card-item">
+      {{data.note}}
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-stroked-button mat-dialog-close class="btn-close">Close</button>
+  </mat-card-actions>
+</mat-card>

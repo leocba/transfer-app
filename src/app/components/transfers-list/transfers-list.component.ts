@@ -13,6 +13,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 import {AddTransferDialogComponent} from '../add-transfer-dialog/add-transfer-dialog.component';
 import {EditTransferDialogComponent} from '../edit-transfer-dialog/edit-transfer-dialog.component';
+import {DetailTransferDialogComponent} from '../detail-transfer-dialog/detail-transfer-dialog.component';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
@@ -79,6 +80,14 @@ export class TransfersListComponent implements OnInit {
     this.dialog.open(EditTransferDialogComponent, {
       ...this.dialogOptions,
       data: {transfer}
+    });
+  }
+
+  openDetailsDialog(transfer: ITransfer) {
+    this.dialog.open(DetailTransferDialogComponent, {
+      ...this.dialogOptions,
+      data: {transfer},
+      panelClass: 'details-dialog-container'
     });
   }
 
