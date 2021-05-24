@@ -103,5 +103,16 @@ describe('TransfersListComponent', () => {
         .length
     ).toBe(1);
   });
+
+  it('should display message if table is empty', () => {
+    store$.setState({ transfers: {transfers: []} });
+    store$.refreshState();
+    fixture.detectChanges();
+
+    expect(
+      fixture.debugElement.queryAll(By.css('.empty-table'))
+        .length
+    ).toBe(1);
+  });
 });
 
