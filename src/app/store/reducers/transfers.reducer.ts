@@ -1,20 +1,26 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {ITransfer} from '../../ITransfer';
+// import {IHttpError} from '../../IHttpError';
 
 // import {AuthActions, AuthActionTypes} from '../../../auth/store/actions';
 // import {ImportRecordModel} from '../../../import/models/import-record.model';
 // import {ImportRecordsModel} from '../../../import/models/import-records.model';
 // import {EmployeeModel} from '../../models';
 import {TransfersActionTypes, TransfersAction} from '../actions';
+import {HttpErrorResponse} from '@angular/common/http';
 
 // import { HttpErrorResponse } from '@angular/common/http';
 
 export interface TransfersState {
   transfers: ITransfer[];
+  loading: boolean;
+  httpError: HttpErrorResponse;
 }
 
 export const initialState: TransfersState = {
   transfers: [],
+  loading: false,
+  httpError: null
 };
 
 export function reducer(state = initialState, action: TransfersAction): TransfersState {
@@ -22,7 +28,11 @@ export function reducer(state = initialState, action: TransfersAction): Transfer
   switch (action.type) {
 
     case TransfersActionTypes.LOAD_TRANSFERS:
-      return loadTransfers(state, action.payload);
+      return loadTransfers(state);
+    case TransfersActionTypes.LOAD_TRANSFERS_SUCCESS:
+      return loadTransfersSuccess(state, action.payload);
+    case TransfersActionTypes.LOAD_TRANSFERS_FAILURE:
+      return loadTransfersFailure(state, action.payload);
     case TransfersActionTypes.CREATE_NEW_TRANSFER:
       return createNewTransfer(state, action.payload);
     case TransfersActionTypes.UPDATE_TRANSFER:
@@ -35,10 +45,26 @@ export function reducer(state = initialState, action: TransfersAction): Transfer
   }
 }
 
-function loadTransfers(state: TransfersState, payload: ITransfer[]): TransfersState {
+function loadTransfers(state: TransfersState): TransfersState {
   return {
     ...state,
+    loading: true
+  };
+}
+
+function loadTransfersSuccess(state: TransfersState, payload: ITransfer[]): TransfersState {
+  return {
+    ...state,
+    loading: initialState.loading,
     transfers: [...payload]
+  };
+}
+
+function loadTransfersFailure(state: TransfersState, payload: HttpErrorResponse): TransfersState {
+  return {
+    ...state,
+    loading: initialState.loading,
+    httpError: payload
   };
 }
 
@@ -71,6 +97,8 @@ function deleteTransfer(state: TransfersState, payload: string): TransfersState 
 export const getTransfersState = createFeatureSelector('transfers');
 
 export const getAllTransfers = createSelector(getTransfersState, (state: TransfersState) => state.transfers);
+export const getLoading = createSelector(getTransfersState, (state: TransfersState) => state.loading);
+export const getTransfersError = createSelector(getTransfersState, (state: TransfersState) => state.httpError);
 
 // export const getTransferByAccountHolder = createSelector(getTransfersState, (state: TransfersState, accountHolder: string) => {
 //   return state.transfers.find((transfer: ITransfer) => {

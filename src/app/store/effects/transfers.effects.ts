@@ -1,6 +1,37 @@
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import {EMPTY, of} from 'rxjs';
+import { map, mergeMap, catchError } from 'rxjs/operators';
+import {TransferService} from '../../services/transfer.service';
+
+@Injectable()
+export class TransferEffects {
+
+  loadMovies$ = createEffect(() => this.actions$.pipe(
+    ofType('[Transfers List] Load Transfers'),
+    mergeMap(() => this.service.getAll()
+      .pipe(
+        map(transfers => ({ type: '[Transfers List] Load Transfers Success', payload: transfers })),
+        catchError((error) => of({ type: '[Transfers List] Load Transfers Failure' , payload: error}))
+      ))
+    )
+  );
+
+  constructor(
+    private actions$: Actions,
+    private service: TransferService,
+  ) {}
+}
+
+
+
+
+
+
+//
 // import {HttpErrorResponse} from '@angular/common/http';
 // import {Injectable} from '@angular/core';
-// import {Actions, Effect, ofType} from '@ngrx/effects';
+// import {Actions, createEffect, ofType} from '@ngrx/effects';
 // import {Action, Store} from '@ngrx/store';
 // import {Observable, of, forkJoin, defer, Subject} from 'rxjs';
 // import {catchError, exhaustMap, map, mergeMap, withLatestFrom, switchMap, finalize, tap} from 'rxjs/operators';
@@ -14,15 +45,15 @@
 // // import {EmployeeModel} from '../../models';
 // // import {EmployeeUpdateModel} from '../../models/employee-update.model';
 // import {
-//     TransfersActionTypes,
-//     LoadTransfers
-//     } from '../actions';
+//   TransfersActionTypes,
+//   LoadTransfers, LoadTransfersFailure, LoadTransfersSuccess
+// } from '../actions';
 // import {TransfersState} from '../reducers';
 // // import { CourseSelectionModel } from 'src/app/courses/models/course-selection.model';
 // // import { CourseAssignmentModel } from 'src/app/courses/models/course-assignment.model';
 //
 // @Injectable()
-// export class EmployeeListEffects {
+// export class TransfersEffect {
 //
 //     constructor(
 //         private actions$: Actions,
@@ -32,7 +63,42 @@
 //         // private coursesStore: Store<CoursesState>
 //     ) {}
 //
+//   loadTransfers$ = createEffect(() => this.actions$.pipe(
+//     ofType(TransfersActionTypes.LOAD_TRANSFERS),
+//     mergeMap(() => this.service.getAll()
+//       .pipe(
+//         map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
+//         catchError(() => EMPTY)
+//       ))
+//     )
+//   );
 //
+//   // // @Effect()
+//   loadTransfers$ = createEffect(() => {
+//     return this.actions$.pipe(
+//       ofType(TransfersActionTypes.LOAD_TRANSFERS),
+//       mergeMap(() => this.service.getAll()
+//         .pipe(
+//           map(movies => (new LoadTransfersSuccess(movies))),
+//           catchError(() => EMPTY)
+//         ))
+//     )
+//       // exhaustMap(() => {
+//       //   debugger
+//       //   return this.service.getAll().pipe(
+//       //     exhaustMap((res: any) => {
+//       //       return of(new LoadTransfersSuccess(res));
+//       //     }),
+//       //     catchError((error: HttpErrorResponse) => {
+//       //       console.error(error);
+//       //       return of(new LoadTransfersFailure(error));
+//       //     })
+//       //   );
+//       // })
+//     );
+//   });
+//
+//     //
 //     // @Effect()
 //     // loadEmployees$ = this.actions$.pipe(
 //     //     ofType(TransfersActionTypes.LOAD_TRANSFERS),

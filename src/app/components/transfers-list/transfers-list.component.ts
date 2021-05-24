@@ -7,12 +7,13 @@ import {Store} from '@ngrx/store';
 import {DeleteTransfer} from '../../store/actions/transfers.action';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import {Observable} from 'rxjs';
-import {getAllTransfers} from '../../store/reducers';
+import {Observable, Subscription} from 'rxjs';
+import {getAllTransfers, getLoading, getTransfersError} from '../../store/reducers';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 import {AddTransferDialogComponent} from '../add-transfer-dialog/add-transfer-dialog.component';
 import {EditTransferDialogComponent} from '../edit-transfer-dialog/edit-transfer-dialog.component';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-transfers-list',
@@ -24,7 +25,11 @@ export class TransfersListComponent implements OnInit {
   @Input() list?: ITransfer[];
   @ViewChild(MatSort) sort: MatSort;
 
+  subscription: Subscription = new Subscription();
   transfers$: Observable<ITransfer[]>;
+  transfers: ITransfer[];
+  transferError: HttpErrorResponse;
+  loading$: Observable<boolean>;
 
   displayedColumns: string[] = ['accountHolder', 'amount', 'date', 'actions'];
   dataSource: MatTableDataSource<ITransfer>;
@@ -57,6 +62,10 @@ export class TransfersListComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.transfers$ = this.store.select(getAllTransfers);
+    this.loading$ = this.store.select(getLoading);
+    // this.subscription.add(this.store.select(getAllTransfers).subscribe(value => {
+    //   this.transfers = value;
+    // }));
   }
 
   openDialog(id: string) {
@@ -81,15 +90,28 @@ export class TransfersListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.transfers$.subscribe((transfers) => {
+    this.subscription.add(this.store.select(getAllTransfers).subscribe(transfers => {
       this.dataSource = new MatTableDataSource(transfers);
       this.dataSource.sort = this.sort;
 
       this.dataSource.filterPredicate = (data: ITransfer, filter: string) => {
         return data.accountHolder.toLowerCase().indexOf(filter) !== -1 || data.note.toLowerCase().indexOf(filter) !== -1;
       };
-    });
+    }));
+
+    // this.transfers$.subscribe((transfers) => {
+    //   this.dataSource = new MatTableDataSource(transfers);
+    //   this.dataSource.sort = this.sort;
+    //
+    //   this.dataSource.filterPredicate = (data: ITransfer, filter: string) => {
+    //     return data.accountHolder.toLowerCase().indexOf(filter) !== -1 || data.note.toLowerCase().indexOf(filter) !== -1;
+    //   };
+    // });
     this.updateTableColumns(window.innerWidth);
+
+    this.subscription.add(this.store.select(getTransfersError).subscribe(value => {
+      this.transferError = value;
+    }));
   }
 
   sortData(sort: Sort) {

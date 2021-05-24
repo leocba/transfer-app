@@ -1,7 +1,9 @@
+@import "./utils/_variables.scss";
+
 .container {
-  margin: 2rem
+  margin: $spacing * 2
 }
 
 mat-toolbar mat-icon {
-  margin-right: .5rem;
+  margin-right: $spacing * .5;
 }

@@ -12,6 +12,8 @@ import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {TransferEffects} from './store/effects/transfers.effects';
 
 import * as fromTransferStore from './store';
 
@@ -27,9 +29,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatCardModule} from '@angular/material/card';
 
 import {
   MAT_MOMENT_DATE_FORMATS,
@@ -68,6 +72,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     HttpClientModule,
     StoreModule.forRoot({}),
     StoreModule.forFeature('transfers', fromTransferStore.reducer),
+    EffectsModule.forRoot([TransferEffects]),
     MatSliderModule,
     MatButtonModule,
     MatTableModule,
@@ -77,11 +82,13 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     MatDatepickerModule,
     MatNativeDateModule,
     AngularIbanModule,
+    MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
     MatGridListModule,
     MatMenuModule,
+    MatProgressBarModule,
     CurrencyMaskModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25

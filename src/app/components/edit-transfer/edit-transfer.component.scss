@@ -1,6 +1,8 @@
+@import "../../utils/_variables.scss";
+
 mat-form-field {
   display: block;
-  margin-bottom: .5rem;
+  margin-bottom: $spacing * .5;
 }
 
 .btn-group {
@@ -9,7 +11,7 @@ mat-form-field {
   button {
     flex-grow: 1;
     & + button {
-      margin-left: 5px;
+      margin-left: $spacing * .25;
     }
   }
 }

@@ -19,10 +19,12 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.transferService
-      .getAll()
-      .subscribe((transfers) => {
-        this.store.dispatch(new LoadTransfers(transfers.list));
-      });
+    this.store.dispatch(new LoadTransfers());
+
+  //   this.transferService
+  //     .getAll()
+  //     .subscribe((transfers) => {
+  //       this.store.dispatch(new LoadTransfers(transfers.list));
+  //     });
   }
 }

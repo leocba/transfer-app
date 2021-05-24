@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 const baseUrl = 'http://localhost:3000/api';
 
@@ -11,7 +12,7 @@ export class TransferService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable< any> {
+  getAll() {
     return this.http.get(`${baseUrl}/transactions`);
   }
 }
