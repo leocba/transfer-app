@@ -63,9 +63,6 @@ export class TransfersListComponent implements OnInit {
   ) {
     this.transfers$ = this.store.select(getAllTransfers);
     this.loading$ = this.store.select(getLoading);
-    // this.subscription.add(this.store.select(getAllTransfers).subscribe(value => {
-    //   this.transfers = value;
-    // }));
   }
 
   openDialog(id: string) {
@@ -99,14 +96,6 @@ export class TransfersListComponent implements OnInit {
       };
     }));
 
-    // this.transfers$.subscribe((transfers) => {
-    //   this.dataSource = new MatTableDataSource(transfers);
-    //   this.dataSource.sort = this.sort;
-    //
-    //   this.dataSource.filterPredicate = (data: ITransfer, filter: string) => {
-    //     return data.accountHolder.toLowerCase().indexOf(filter) !== -1 || data.note.toLowerCase().indexOf(filter) !== -1;
-    //   };
-    // });
     this.updateTableColumns(window.innerWidth);
 
     this.subscription.add(this.store.select(getTransfersError).subscribe(value => {

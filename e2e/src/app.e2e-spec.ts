@@ -15,7 +15,7 @@ describe('workspace-project App', () => {
     expect(page.getTitleText()).toEqual('My App');
   });
 
-  it('should display 5 transfers on init', () => {
+  it('should display initial transfers on list', () => {
     page.navigateTo();
     expect(page.getListCount()).toEqual(5);
   });
@@ -26,13 +26,13 @@ describe('workspace-project App', () => {
     expect(page.getListCount()).toEqual(1);
   });
 
-  it('should filter search by note', () => {
+  it('should filter by note', () => {
     page.navigateTo();
     searchInput.sendKeys('Sed');
     expect(page.getListCount()).toEqual(2);
   });
 
-  it('should delete one transfer', () => {
+  it('should delete a transfer', () => {
     page.navigateTo();
     element.all(by.css('.mat-table .mat-row')).get(0).$('.btn-transfer-menu').click();
     element(by.css('.cdk-overlay-pane')).$('.btn-transfer-menu-delete').click();
@@ -43,16 +43,16 @@ describe('workspace-project App', () => {
   it('should create a new transfer', () => {
     page.navigateTo();
     element(by.css('#btn-add-transfer')).click();
-    element(by.css('#form-create')).$('#accountHolder').sendKeys('pepe');
+    element(by.css('#form-create')).$('#accountHolder').sendKeys('Ken Smith');
     element(by.css('#form-create')).$('#IBAN').sendKeys('DE27100777770209299700');
     element(by.css('#form-create')).$('#amount').sendKeys('100,00');
     element(by.css('#form-create')).$('#date').sendKeys('01.05.2022');
-    element(by.css('#form-create')).$('#note').sendKeys('notaaa');
+    element(by.css('#form-create')).$('#note').sendKeys('This is a new transaction');
     element(by.css('#form-create')).$('#btn-save').click();
     expect(element.all(by.css('.mat-table .mat-row')).count()).toEqual(6);
   });
 
-  it('should modify a transfer', () => {
+  it('should update a transfer', () => {
     page.navigateTo();
     searchInput.sendKeys('Penelope Berry');
     element.all(by.css('.mat-table .mat-row')).get(0).$('.btn-transfer-menu').click();

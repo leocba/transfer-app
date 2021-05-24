@@ -6,7 +6,7 @@ export class AppPage {
   }
 
   getTitleText(): Promise<string> {
-    return element(by.css('.pepe')).getText() as Promise<string>;
+    return element(by.css('.app-title')).getText() as Promise<string>;
   }
 
   getListCount(): Promise<number> {

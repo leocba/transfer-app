@@ -18,14 +18,3 @@ app.get('/api/transactions', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
-
-function setConnectionTimeout(time) {
-  var delay = typeof time === 'string'
-    ? ms(time)
-    : Number(time || 5000);
-
-  return function (req, res, next) {
-    res.connection.setTimeout(delay);
-    next();
-  }
-}
