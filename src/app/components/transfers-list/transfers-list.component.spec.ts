@@ -11,6 +11,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatCardModule} from '@angular/material/card';
 
 import {initialState} from '../../utils/initialState';
 
@@ -30,6 +31,7 @@ describe('TransfersListComponent', () => {
         MatProgressBarModule,
         MatTableModule,
         MatInputModule,
+        MatCardModule,
         AngularIbanModule,
         BrowserAnimationsModule,
         MatMenuModule,
@@ -70,6 +72,34 @@ describe('TransfersListComponent', () => {
 
     expect(
       fixture.debugElement.queryAll(By.css('mat-progress-bar'))
+        .length
+    ).toBe(1);
+  });
+
+  it('should display error alert if there is a http error', () => {
+    store$.setState({ transfers: {
+      httpError: {
+        headers: {
+          normalizedNames: {},
+          lazyUpdate: null,
+          headers: {}
+        },
+        status: 0,
+        statusText: 'Unknown Error',
+        url: 'http://localhost:3000/api/transactions',
+        ok: false,
+        name: 'HttpErrorResponse',
+        message: 'Http failure response for http://localhost:3000/api/transactions: 0 Unknown Error',
+        error: {
+          isTrusted: true
+        }
+      }
+      } });
+    store$.refreshState();
+    fixture.detectChanges();
+
+    expect(
+      fixture.debugElement.queryAll(By.css('.alert-error'))
         .length
     ).toBe(1);
   });
