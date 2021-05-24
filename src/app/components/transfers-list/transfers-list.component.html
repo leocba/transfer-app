@@ -1,6 +1,6 @@
 <h1>My Transactions</h1>
 
-<div *ngIf="dataSource.data.length > 0">
+<div *ngIf="dataSource.data?.length > 0">
   <div class="list-header">
     <mat-form-field>
       <input id="input-search" matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">

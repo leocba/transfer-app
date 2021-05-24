@@ -51,6 +51,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.pepe').textContent).toContain('My App');
+    expect(compiled.querySelector('.app-title').textContent).toContain('My App');
   });
 });
